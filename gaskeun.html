@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood booster Neshaa ❤️</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #ff6f61;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #ff4a3d;
+        }
+        #runButton {
+            position: absolute;
+            transition: all 0.5s ease;
+        }
+        #happySection, #beteSection, #stillBeteSection, #finalMessageSection {
+            display: none;
+            margin-top: 20px;
+        }
+        .funnyImage {
+            width: 150px;
+            margin: 10px;
+            animation: spin 4s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="mainScreen">
+        <h1>Halo Sayang! ❤️</h1>
+        <p>Nih Click ya biar bete kamu hilang</p>
+        <button onclick="showBeteSection()">Click aku 😔</button>
+    </div>
+
+    <div class="container" id="beteSection">
+        <h2>Oh tidak, kamu bete? 😢</h2>
+        <p>Ayo main game dulu biar bete-nya ilang!</p>
+        <button onclick="startGame()">Main Game Yuk!</button>
+    </div>
+
+    <div class="container" id="gameSection" style="display: none;">
+        <h3>Game Klik Cepat!</h3>
+        <p>Klik tombol ini sebanyak mungkin dalam 5 detik:</p>
+        <button id="clickButton" onclick="clickCounter()">Klik Aku!</button>
+        <p id="clickGame">Klikmu: 0</p>
+        <button onclick="askStillBete()">Selesai Main</button>
+    </div>
+
+    <div class="container" id="stillBeteSection">
+        <h2>Masih bete? 😭</h2>
+        <p>Jangan bete dong, aku ada tombol ajaib nih:</p>
+        <button id="runButton" onmouseover="runButton()">Klik aku kalo bisa!</button>
+        <p>Tadi kamu ketipu ya? Wkwkwk! 😂</p>
+        <button onclick="showFinalMessage()">Lanjut</button>
+    </div>
+
+    <div class="container" id="finalMessageSection">
+        <h2>Ini buat kamu! ❤️</h2>
+        <p id="finalMessage"></p>
+        <button onclick="backToMain()">Kembali</button>
+    </div>
+
+    <script>
+        // Fungsi buat navigasi
+        function showHappySection() {
+            document.getElementById('mainScreen').style.display = 'none';
+            document.getElementById('happySection').style.display = 'block';
+        }
+
+        function showBeteSection() {
+            document.getElementById('mainScreen').style.display = 'none';
+            document.getElementById('beteSection').style.display = 'block';
+        }
+
+        function backToMain() {
+            document.getElementById('mainScreen').style.display = 'block';
+            document.getElementById('happySection').style.display = 'none';
+            document.getElementById('beteSection').style.display = 'none';
+            document.getElementById('gameSection').style.display = 'none';
+            document.getElementById('stillBeteSection').style.display = 'none';
+            document.getElementById('finalMessageSection').style.display = 'none';
+        }
+
+        // Game Klik Cepat
+        let clickCount = 0;
+        let gameStarted = false;
+
+        function startGame() {
+            document.getElementById('beteSection').style.display = 'none';
+            document.getElementById('gameSection').style.display = 'block';
+            clickCount = 0;
+            document.getElementById('clickGame').textContent = 'Klikmu: 0';
+            gameStarted = false;
+        }
+
+        function clickCounter() {
+            if (!gameStarted) {
+                gameStarted = true;
+                setTimeout(() => {
+                    alert(`Waktu habis! Kamu klik ${clickCount} kali.`);
+                    clickCount = 0;
+                    document.getElementById('clickGame').textContent = 'Klikmu: 0';
+                    gameStarted = false;
+                }, 5000);
+            }
+            clickCount++;
+            document.getElementById('clickGame').textContent = `Klikmu: ${clickCount}`;
+        }
+
+        // Tanya masih bete atau nggak
+        function askStillBete() {
+            document.getElementById('gameSection').style.display = 'none';
+            document.getElementById('stillBeteSection').style.display = 'block';
+        }
+
+        // Tombol Lari-lari
+        function runButton() {
+            const button = document.getElementById('runButton');
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+        }
+
+        // Pesen Lucu Otomatis Ganti-ganti
+        const messages = [
+            "Hey kamu, jangan bete dong! Kamu itu kayak bintang, selalu cerahin hariku! ✨",
+            "Kalo kamu bete, siapa yang mau nemenin aku ketawa? 😆",
+            "Bete itu cuma sementara, tapi kamu itu selamanya cantik! 💖",
+            "Jangan bete, nanti aku jadi ikutan bete. Eh, tapi aku nggak bisa bete liat senyum kamu! 😊",
+            "Kamu tau nggak? Bete itu cuma ilusi, tapi cantik kamu itu nyata banget! 💫",
+            "Kalo kamu bete, inget ini: kamu itu spesial, unik, dan aku sayang banget sama kamu! ❤️",
+            "Bete itu cuma angin lalu, tapi kamu itu kayak matahari yang selalu ada buat aku! 🌞",
+            "Jangan bete dong, nanti aku jadi bingung gimana caranya bikin kamu senyum lagi! 😘",
+            "Kamu itu kayak WiFi, kalo nggak ada, aku langsung bete! 😂",
+            "Bete itu nggak ada artinya kalo dibandingin sama senyum kamu! 😁"
+        ];
+
+        let messageIndex = 0;
+
+        function showFinalMessage() {
+            document.getElementById('stillBeteSection').style.display = 'none';
+            document.getElementById('finalMessageSection').style.display = 'block';
+            document.getElementById('finalMessage').textContent = messages[messageIndex];
+            messageIndex = (messageIndex + 1) % messages.length;
+            setInterval(() => {
+                document.getElementById('finalMessage').textContent = messages[messageIndex];
+                messageIndex = (messageIndex + 1) % messages.length;
+            }, 3000); // Ganti pesen setiap 3 detik
+        }
+    </script>
+</body>
+</html>
